@@ -10,6 +10,7 @@ char hexaKeys[ROWS][COLS] = {
 };
 byte rowPins[ROWS] = {3,4}; 
 byte colPins[COLS] = {5,6,7,8}; 
+Keypad customKeypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 void setup(){
   Serial.begin(9600);
 }
