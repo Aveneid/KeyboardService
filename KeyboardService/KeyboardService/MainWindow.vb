@@ -18,6 +18,7 @@ Public Class MainWindow
 
     Dim activeKey As Integer = -1
     Public selectedCOM As String = "None"
+    Dim buttons As New List(Of Button)
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         If thrd.IsAlive Then
             thrd.Abort()
@@ -27,19 +28,59 @@ Public Class MainWindow
 
     Private Sub SelectCOMToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectCOMToolStripMenuItem.Click
         SelectCOM.ShowDialog()
-
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ToolStripStatusLabel1.Text = "Selected port: " & selectedCOM
+        For Each b In Controls
+            If TypeOf b Is Button Then
+                If b IsNot Nothing Then
+                    buttons.Add(b)
+                    Logs.Log("# found button " & b.Name)
+                End If
+            End If
+        Next
+        For Each b In buttons
+            AddHandler b.Click, AddressOf btnHandler
+        Next
+        sortButtons()
+
+    End Sub
+    Sub sortButtons()
+        Dim tmp As New List(Of Button)
+        Logs.Log("# order of buttons: ")
+        Dim tString As String = ""
+        For l = 0 To 7
+            tString &= " " & buttons(l).Name
+        Next
+        Logs.Log(tString)
+
+        For i = 1 To 8
+            For j = 0 To 7
+                If buttons(j).Name = "btn" & i Then
+                    tmp.Add(buttons(j))
+                End If
+            Next
+        Next
+
+        buttons = tmp
+
+        Logs.Log("# buttons order sorted")
+        Logs.Log("# order of buttons: ")
+        tString = ""
+        For l = 0 To 7
+            tString &= " " & buttons(l).Name
+        Next
+
+        Logs.Log(tString)
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Sub btnHandler(ByVal sender As System.Object, e As System.EventArgs)
         Me.KeyPreview = True
-        activeKey = 1
+        activeKey = CInt(CType(sender, Button).Name.Substring(3))
+        Logs.Log("# active key: " & activeKey)
         Me.Enabled = False
     End Sub
-
     Private Sub ReadSerial()
         If selectedCOM IsNot "None" Then
             Try
@@ -66,7 +107,7 @@ Public Class MainWindow
             Catch ex As Exception
                 Dim exType = ex.GetType
                 If exType = GetType(TimeoutException) Then
-                    Logs.RichTextBox1.AppendText(TimeOfDay.ToString("hh:mm:ss") & "Error: read timeout")
+                    Logs.Log("! Error: read timeout")
                 End If
                 com.Close()
                 com = Nothing
@@ -108,22 +149,35 @@ Public Class MainWindow
         If Me.KeyPreview Then
             Dim pressedKeys As New List(Of String)
             Dim pressedKeysNames As New List(Of String)
-            If e.Control Then
-                pressedKeys.Add("^")
-                pressedKeysNames.Add("Ctrl")
+            If e.KeyCode.ToString IsNot Nothing Then
+                If e.Control Then
+                    pressedKeys.Add("^")
+                    pressedKeysNames.Add("Ctrl")
+                    Controls.Find("btn" & activeKey, False)(0).Text = "Ctrl"
+                    Logs.Log("# key pressed: " & "Ctrl")
+                End If
+                If e.Shift Then
+                    pressedKeys.Add("+")
+                    pressedKeysNames.Add("Shift")
+                    Controls.Find("btn" & activeKey, False)(0).Text = "Shift"
+                    Logs.Log("# key pressed: " & "Shift")
+                End If
+                If e.Alt Then
+                    pressedKeys.Add("%")
+                    pressedKeysNames.Add("Alt")
+                    Controls.Find("btn" & activeKey, False)(0).Text = "Alt"
+                    Logs.Log("# key pressed: " & "Alt")
+                End If
+                If (e.KeyCode >= Windows.Forms.Keys.A AndAlso Windows.Forms.Keys.Z) Or (e.KeyCode >= Windows.Forms.Keys.D0 AndAlso e.KeyCode <= Windows.Forms.Keys.D9) Then
+                    pressedKeys.Add(e.KeyCode.ToString)
+                    pressedKeysNames.Add(e.KeyCode.ToString)
+                    Controls.Find("btn" & activeKey, False)(0).Text = e.KeyCode.ToString
+                    Logs.Log("# key pressed: " & e.KeyCode.ToString)
+                End If
+                Me.KeyPreview = False
+                Me.Enabled = True
             End If
-            If e.Shift Then
-                pressedKeys.Add("+")
-                pressedKeysNames.Add("Shift")
-            End If
-            If e.Alt Then
-                pressedKeys.Add("%")
-                pressedKeysNames.Add("ALt")
-            End If
-            If e.KeyCode >= Windows.Forms.Keys.A AndAlso Windows.Forms.Keys.Z Then
-                pressedKeys.Add(e.KeyCode.ToString)
-                pressedKeysNames.Add(e.KeyCode.ToString)
-            End If
+
         End If
     End Sub
 End Class

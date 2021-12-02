@@ -22,25 +22,25 @@ Partial Class Logs
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.LogsBox = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
-        'RichTextBox1
+        'LogsBox
         '
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.Location = New System.Drawing.Point(0, 0)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(274, 375)
-        Me.RichTextBox1.TabIndex = 0
-        Me.RichTextBox1.Text = ""
+        Me.LogsBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LogsBox.Location = New System.Drawing.Point(0, 0)
+        Me.LogsBox.Name = "LogsBox"
+        Me.LogsBox.ReadOnly = True
+        Me.LogsBox.Size = New System.Drawing.Size(274, 374)
+        Me.LogsBox.TabIndex = 0
+        Me.LogsBox.Text = ""
         '
         'Logs
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(274, 375)
-        Me.Controls.Add(Me.RichTextBox1)
+        Me.ClientSize = New System.Drawing.Size(274, 374)
+        Me.Controls.Add(Me.LogsBox)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(290, 413)
@@ -51,5 +51,5 @@ Partial Class Logs
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents RichTextBox1 As System.Windows.Forms.RichTextBox
+    Friend WithEvents LogsBox As System.Windows.Forms.RichTextBox
 End Class

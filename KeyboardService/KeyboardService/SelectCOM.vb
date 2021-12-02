@@ -3,7 +3,6 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         MainWindow.selectedCOM = ComPortsList.SelectedItem
         MainWindow.ToolStripStatusLabel1.Text = "Selected port: " & ComPortsList.SelectedItem
-
         Me.Close()
     End Sub
 
