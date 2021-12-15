@@ -15,7 +15,8 @@ Public Class MainWindow
     Dim writeFS As New IO.StreamWriter(mainFS)
 
     Dim keys() As String = {"A", "B", "C", "D", "E", "F", "G", "H"}
-
+    Dim pluses() As Integer = {0, 0, 0, 0, 0, 0, 0, 0}
+    Dim keysNames() = {"", "", "", "", "", "", "", ""}
     Dim activeKey As Integer = -1
     Public selectedCOM As String = "None"
     Dim buttons As New List(Of Button)
@@ -80,6 +81,7 @@ Public Class MainWindow
         activeKey = CInt(CType(sender, Button).Name.Substring(3))
         Logs.Log("# active key: " & activeKey)
         Me.Enabled = False
+        pluses(activeKey) = 0
     End Sub
     Private Sub ReadSerial()
         If selectedCOM IsNot "None" Then
@@ -87,6 +89,7 @@ Public Class MainWindow
                 Dim incomingdata As String = Nothing
                 com = My.Computer.Ports.OpenSerialPort(selectedCOM)
                 com.BaudRate = CInt(9600)
+                pluses(activeKey) += 1
                 Do
                     If cancelling Then
                         Exit Do
@@ -95,8 +98,9 @@ Public Class MainWindow
                             incomingdata = com.ReadLine()
                             If incomingdata IsNot Nothing Then
                                 If IsNumeric(incomingdata) Then
-                                    SendKeys.Flush()
-                                    SendKeys.SendWait(keys(incomingdata))
+                                    ' SendKeys.Flush()
+                                    ' SendKeys.SendWait(keys(incomingdata))
+                                    Logs.Log(keysNames(incomingdata))
                                 End If
                             End If
                             incomingdata = Nothing
@@ -147,30 +151,33 @@ Public Class MainWindow
 
     Private Sub MainWindow_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If Me.KeyPreview Then
-            Dim pressedKeys As New List(Of String)
-            Dim pressedKeysNames As New List(Of String)
             If e.KeyCode.ToString IsNot Nothing Then
                 If e.Control Then
-                    pressedKeys.Add("^")
-                    pressedKeysNames.Add("Ctrl")
+                    keys(activeKey) &= ("(^")
+                    'pressedKeys.Add("(^")
+                    keysNames(activeKey) &= "Ctrl "
                     Controls.Find("btn" & activeKey, False)(0).Text = "Ctrl"
                     Logs.Log("# key pressed: " & "Ctrl")
                 End If
                 If e.Shift Then
-                    pressedKeys.Add("+")
-                    pressedKeysNames.Add("Shift")
+                    keys(activeKey) &= "(+"
+                    'pressedKeys.Add("(+")
+                    keysNames(activeKey) &= ("Shift ")
                     Controls.Find("btn" & activeKey, False)(0).Text = "Shift"
                     Logs.Log("# key pressed: " & "Shift")
                 End If
                 If e.Alt Then
-                    pressedKeys.Add("%")
-                    pressedKeysNames.Add("Alt")
+                    keys(activeKey) &= "(%"
+                    'pressedKeys.Add("%")
+                    keysNames(activeKey) &= ("Alt ")
                     Controls.Find("btn" & activeKey, False)(0).Text = "Alt"
                     Logs.Log("# key pressed: " & "Alt")
                 End If
                 If (e.KeyCode >= Windows.Forms.Keys.A AndAlso Windows.Forms.Keys.Z) Or (e.KeyCode >= Windows.Forms.Keys.D0 AndAlso e.KeyCode <= Windows.Forms.Keys.D9) Then
-                    pressedKeys.Add(e.KeyCode.ToString)
-                    pressedKeysNames.Add(e.KeyCode.ToString)
+                    keys(activeKey) &= e.KeyCode.ToString
+
+                    'pressedKeys.Add(e.KeyCode.ToString)
+                    keysNames(activeKey) &= (e.KeyCode.ToString & " ")
                     Controls.Find("btn" & activeKey, False)(0).Text = e.KeyCode.ToString
                     Logs.Log("# key pressed: " & e.KeyCode.ToString)
                 End If
