@@ -44,6 +44,7 @@ Partial Class MainWindow
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.RunAtStartupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -123,7 +124,7 @@ Partial Class MainWindow
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StartServiceToolStripMenuItem, Me.StopServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.LoadConfigToolStripMenuItem, Me.SaveConfigToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StartServiceToolStripMenuItem, Me.StopServiceToolStripMenuItem, Me.ToolStripSeparator2, Me.LoadConfigToolStripMenuItem, Me.SaveConfigToolStripMenuItem, Me.ToolStripSeparator1, Me.RunAtStartupToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -131,41 +132,41 @@ Partial Class MainWindow
         'StartServiceToolStripMenuItem
         '
         Me.StartServiceToolStripMenuItem.Name = "StartServiceToolStripMenuItem"
-        Me.StartServiceToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.StartServiceToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.StartServiceToolStripMenuItem.Text = "Start service"
         '
         'StopServiceToolStripMenuItem
         '
         Me.StopServiceToolStripMenuItem.Name = "StopServiceToolStripMenuItem"
-        Me.StopServiceToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.StopServiceToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.StopServiceToolStripMenuItem.Text = "Stop service"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(134, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(177, 6)
         '
         'LoadConfigToolStripMenuItem
         '
         Me.LoadConfigToolStripMenuItem.Name = "LoadConfigToolStripMenuItem"
-        Me.LoadConfigToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.LoadConfigToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.LoadConfigToolStripMenuItem.Text = "Load config"
         '
         'SaveConfigToolStripMenuItem
         '
         Me.SaveConfigToolStripMenuItem.Name = "SaveConfigToolStripMenuItem"
-        Me.SaveConfigToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.SaveConfigToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveConfigToolStripMenuItem.Text = "Save config"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(134, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'SelectCOMToolStripMenuItem
@@ -178,7 +179,7 @@ Partial Class MainWindow
         '
         Me.StatusStrip1.AllowMerge = False
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel3, Me.ToolStripStatusLabel2})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 190)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 189)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(346, 22)
         Me.StatusStrip1.SizingGrip = False
@@ -189,13 +190,13 @@ Partial Class MainWindow
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(121, 17)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(119, 17)
         Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'ToolStripStatusLabel3
         '
         Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(178, 17)
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(180, 17)
         Me.ToolStripStatusLabel3.Spring = True
         '
         'ToolStripStatusLabel2
@@ -204,11 +205,17 @@ Partial Class MainWindow
         Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(32, 17)
         Me.ToolStripStatusLabel2.Text = "Logs"
         '
+        'RunAtStartupToolStripMenuItem
+        '
+        Me.RunAtStartupToolStripMenuItem.Name = "RunAtStartupToolStripMenuItem"
+        Me.RunAtStartupToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.RunAtStartupToolStripMenuItem.Text = "Run at Startup"
+        '
         'MainWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(346, 212)
+        Me.ClientSize = New System.Drawing.Size(346, 211)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.btn5)
         Me.Controls.Add(Me.btn6)
@@ -256,5 +263,5 @@ Partial Class MainWindow
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripStatusLabel3 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As System.Windows.Forms.ToolStripStatusLabel
-
+    Friend WithEvents RunAtStartupToolStripMenuItem As ToolStripMenuItem
 End Class

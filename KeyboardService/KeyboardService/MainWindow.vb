@@ -1,7 +1,9 @@
-﻿Imports System.Threading
+﻿Imports IWshRuntimeLibrary
+Imports System.Threading
 Imports System.IO
 Imports System.Exception
 Imports System.Windows.Forms
+
 Public Class MainWindow
 
     Dim com As IO.Ports.SerialPort = Nothing
@@ -20,6 +22,10 @@ Public Class MainWindow
     Dim activeKey As Integer = -1
     Public selectedCOM As String = "None"
     Dim buttons As New List(Of Button)
+
+    Dim SRT As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
+    Dim SRTLNK As String = SRT & "\MouseMacro.lnk"
+
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         If thrd.IsAlive Then
             thrd.Abort()
@@ -32,6 +38,7 @@ Public Class MainWindow
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If IO.File.Exists(SRTLNK) Then RunAtStartupToolStripMenuItem.Checked = True
         ToolStripStatusLabel1.Text = "Selected port: " & selectedCOM
         For Each b In Controls
             If TypeOf b Is Button Then
@@ -185,6 +192,20 @@ Public Class MainWindow
                 Me.Enabled = True
             End If
 
+        End If
+    End Sub
+
+    Private Sub RunAtStartupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RunAtStartupToolStripMenuItem.Click
+        If IO.File.Exists(SRTLNK) Then
+            IO.File.Delete(SRTLNK)
+            RunAtStartupToolStripMenuItem.Checked = False
+        Else
+            Dim WSHC As WshShellClass = New WshShellClass
+            Dim SRTSHCUT As IWshRuntimeLibrary.IWshShortcut
+            SRTSHCUT = CType(WSHC.CreateShortcut(SRTLNK), IWshRuntimeLibrary.IWshShortcut)
+            SRTSHCUT.TargetPath = System.Reflection.Assembly.GetEntryAssembly().Location
+            SRTSHCUT.Save()
+            RunAtStartupToolStripMenuItem.Checked = True
         End If
     End Sub
 End Class
